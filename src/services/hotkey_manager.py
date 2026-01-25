@@ -4,6 +4,7 @@ from src.config import config
 from src.services.audio_recorder import AudioRecorder
 from src.services.transcriber import Transcriber
 from src.services.text_injector import TextInjector
+from src.services.llm_refiner import LLMRefiner
 from src.utils.logger import logger
 import winsound
 import traceback
@@ -14,6 +15,7 @@ class HotkeyManager:
         self.recorder = AudioRecorder(on_audio_level=on_audio_level)
         self.transcriber = Transcriber()
         self.injector = TextInjector()
+        self.refiner = LLMRefiner()
         self.on_recording_start = on_recording_start
         self.on_recording_stop = on_recording_stop
         
@@ -98,7 +100,9 @@ class HotkeyManager:
         try:
             text = self.transcriber.transcribe(audio_file)
             if text:
-                self.injector.type_text(text)
+                # Refine text if enabled
+                refined_text = self.refiner.refine(text)
+                self.injector.type_text(refined_text)
         except Exception as e:
             logger.error(f"Error processing audio in thread: {e}")
             logger.debug(traceback.format_exc())

@@ -11,9 +11,23 @@ class Config:
     CHUNK_SIZE = 1024
     
     # Model settings
-    MODEL_SIZE = "small"      # tiny=fastest, base, small, medium, large=slowest
-    DEVICE = "cpu"           # cpu or cuda (for NVIDIA GPU)
-    LANGUAGE = "zh"          # Set to Chinese for faster detection
+    MODEL_SIZE = "small"      # tiny, base, small, medium, large
+    DEVICE = "cpu"           # cpu or cuda
+    LANGUAGE = "zh"          # Set to Chinese
+    
+    # LLM Settings
+    LLM_ENABLED = True
+    LLM_MODEL = "qwen2:1.5b"
+    LLM_API_URL = "http://localhost:11434/api/generate"
+    LLM_PROMPT = """你是一个语音输入助手。
+请仅移除以下文本中的口语水词（如：那个、嗯、啊、就是、然后、那个什么）。
+要求：
+1. 保持原句的语气和用词，不要过度修饰。
+2. 修正明显的录入错误或重复。
+3. 如果原文没有水词，请原样返回。
+4. 只返回处理后的结果文本。
+
+文本输入："""
 
     # Paths
     if getattr(sys, 'frozen', False):
