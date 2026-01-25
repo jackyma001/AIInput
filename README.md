@@ -6,7 +6,7 @@ A high-performance voice input tool for Windows that transcribes speech in real-
 
 ## Features
 
-- **Global Hotkey**: Press `Ctrl + Space` (default) or `Right Ctrl` (configurable alternative) to start/stop recording.
+- **Global Hotkey**: Press `Ctrl + win` (default) or `Right Ctrl` (configurable alternative) to start/stop recording.
 - **Audio Recording**: Captures microphone input.
 - **AI Transcription**: Uses OpenAI's Whisper model locally to transcribe speech to text.
 - **Text Injection**: Types the transcribed text into the active window.
