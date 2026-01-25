@@ -1,4 +1,5 @@
 import os
+import sys
 
 class Config:
     # Hotkey settings
@@ -15,7 +16,13 @@ class Config:
     LANGUAGE = "zh"          # Set to Chinese for faster detection
 
     # Paths
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    if getattr(sys, 'frozen', False):
+        # Running as EXE
+        BASE_DIR = os.path.dirname(sys.executable)
+    else:
+        # Running as script
+        BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    
     TEMP_DIR = os.path.join(BASE_DIR, "temp")
     LOG_FILE = os.path.join(BASE_DIR, "app.log")
 
