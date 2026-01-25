@@ -26,6 +26,11 @@ args = [
     '--hidden-import=onnxruntime',
     '--hidden-import=pynput.keyboard._win32',
     '--hidden-import=pynput.mouse._win32',
+    '--hidden-import=requests',
+    '--hidden-import=pyaudio',
+    '--hidden-import=charset_normalizer',
+    '--hidden-import=idna',
+    '--hidden-import=urllib3',
     '--add-data=src;src',   # Include the src folder
     '--clean',
 ]
