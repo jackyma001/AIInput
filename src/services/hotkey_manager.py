@@ -5,6 +5,8 @@ from src.services.audio_recorder import AudioRecorder
 from src.services.transcriber import Transcriber
 from src.services.text_injector import TextInjector
 from src.utils.logger import logger
+import winsound
+import traceback
 
 class HotkeyManager:
     def __init__(self, on_recording_start=None, on_recording_stop=None, on_audio_level=None):
@@ -72,6 +74,8 @@ class HotkeyManager:
             if not self.recorder.is_recording:
                 logger.debug("Hotkey combo pressed: Starting recording")
                 self.recorder.start_recording()
+                # Play a very short, subtle beep (low frequency, short duration)
+                threading.Thread(target=lambda: winsound.Beep(600, 50), daemon=True).start()
                 if self.on_recording_start:
                     self.on_recording_start()
         except Exception as e:
