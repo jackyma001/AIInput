@@ -13,17 +13,26 @@ class HotkeyManager:
     def __init__(self, on_recording_start=None, on_recording_stop=None, on_audio_level=None):
         self.on_audio_level = on_audio_level
         self.recorder = AudioRecorder(on_audio_level=on_audio_level)
-        self.transcriber = Transcriber()
+        self.transcriber = None
         self.injector = TextInjector()
         self.refiner = LLMRefiner()
         self.on_recording_start = on_recording_start
         self.on_recording_stop = on_recording_stop
+        
+        # Async model loading
+        threading.Thread(target=self._load_transcriber, daemon=True).start()
         
         # Track pressed keys for push-to-talk
         self.pressed_keys = set()
         self.hotkey_active = False
         self.listener = None
         self.is_listening = False
+
+    def _load_transcriber(self):
+        try:
+            self.transcriber = Transcriber()
+        except Exception as e:
+            logger.error(f"Failed to load transcriber: {e}")
 
     def start_listening(self):
         self.is_listening = True
@@ -98,6 +107,11 @@ class HotkeyManager:
 
     def _process_audio(self, audio_file):
         try:
+            if not self.transcriber:
+                logger.warning("Transcriber still loading...")
+                self.injector.type_text("(AI模型正在加载中，请稍后再试...)")
+                return
+
             text = self.transcriber.transcribe(audio_file)
             if text:
                 # Refine text if enabled

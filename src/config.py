@@ -16,7 +16,7 @@ class Config:
     LANGUAGE = "zh"          # Set to Chinese
     
     # LLM Settings
-    LLM_ENABLED = True
+    LLM_ENABLED = False
     LLM_MODEL = "qwen2:1.5b"
     LLM_API_URL = "http://localhost:11434/api/generate"
     LLM_PROMPT = """你是一个语音输入助手。

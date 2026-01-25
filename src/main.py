@@ -31,6 +31,10 @@ def handle_exception(exc_type, exc_value, exc_traceback):
 sys.excepthook = handle_exception
 
 def main():
+    if sys.platform.startswith('win'):
+        import multiprocessing
+        multiprocessing.freeze_support()
+
     app = QApplication(sys.argv)
     # Ensure app doesn't exit when window is hidden
     app.setQuitOnLastWindowClosed(False)
