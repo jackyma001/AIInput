@@ -1,0 +1,7 @@
+PyQt5
+pynput
+pyaudio
+faster-whisper
+onnxruntime
+numpy
+pywin32

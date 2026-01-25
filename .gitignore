@@ -1,0 +1,28 @@
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.venv/
+env/
+venv/
+ENV/
+
+# Project specific
+temp/
+*.log
+*.wav
+*.mp3
+
+# Models
+# Whisper models can be large, we don't want them in git
+# usually they go to ~/.cache/whisper or huggingface cache
+# but if any are local to the project:
+models/
+
+# VS Code / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
