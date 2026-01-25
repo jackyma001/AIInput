@@ -1,6 +1,8 @@
 # AIInput
 
-A voice input tool that listens for a hotkey, records speech, transcribes it using Whisper, and simulates keyboard input.
+[Chinese Version (中文版)](./README_ZH.md)
+
+A high-performance voice input tool for Windows that transcribes speech in real-time and types it wherever you are.
 
 ## Features
 
