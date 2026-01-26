@@ -11,7 +11,7 @@ class Config:
     CHUNK_SIZE = 1024
     
     # Model settings
-    MODEL_SIZE = "small"      # tiny, base, small, medium, large
+    MODEL_SIZE = "medium"      # tiny, base, small, medium, large
     DEVICE = "cpu"           # cpu or cuda
     LANGUAGE = "zh"          # Set to Chinese
     

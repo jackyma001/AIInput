@@ -1,6 +1,31 @@
 import sys
 import os
 import traceback
+from datetime import datetime
+
+# CRITICAL: Setup global exception handler immediately to catch import errors
+def handle_exception(exc_type, exc_value, exc_traceback):
+    if issubclass(exc_type, KeyboardInterrupt):
+        sys.__excepthook__(exc_type, exc_value, exc_traceback)
+        return
+    
+    # Try to log to a file even if logger isn't ready
+    try:
+        error_msg = "".join(traceback.format_exception(exc_type, exc_value, exc_traceback))
+        with open("crash_log.txt", "a", encoding="utf-8") as f:
+            f.write(f"\n[{datetime.now()}] CRITICAL CRASH:\n{error_msg}\n")
+    except:
+        pass # If we can't write to file, we're really in trouble
+
+    # Also try to use the app logger if available
+    try:
+        from src.utils.logger import logger
+        logger.critical("Uncaught exception", exc_info=(exc_type, exc_value, exc_traceback))
+    except:
+        pass
+
+sys.excepthook = handle_exception
+
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import QObject, pyqtSignal
 
@@ -10,6 +35,7 @@ project_root = os.path.dirname(current_dir)
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
+# Imports with logging available (handled by excepthook)
 from src.services.hotkey_manager import HotkeyManager
 from src.ui.tray_icon import TrayIcon
 from src.ui.listening_bar import ListeningBar
@@ -21,14 +47,6 @@ class AppSignals(QObject):
     hide_bar = pyqtSignal()
     update_level = pyqtSignal(float)
     update_tray = pyqtSignal(bool)
-
-def handle_exception(exc_type, exc_value, exc_traceback):
-    if issubclass(exc_type, KeyboardInterrupt):
-        sys.__excepthook__(exc_type, exc_value, exc_traceback)
-        return
-    logger.critical("Uncaught exception", exc_info=(exc_type, exc_value, exc_traceback))
-
-sys.excepthook = handle_exception
 
 def main():
     if sys.platform.startswith('win'):
