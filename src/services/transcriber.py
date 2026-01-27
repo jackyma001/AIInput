@@ -37,7 +37,7 @@ class Transcriber:
                     beam_size=1,
                     vad_filter=True,  # Enable VAD to filter silence (Speedup!)
                     vad_parameters=dict(min_silence_duration_ms=500),
-                    initial_prompt="以下是简体中文的句子。"
+                    # initial_prompt="以下是简体中文的句子。" # REMOVED: Allow auto-detect for English/Chinese mixed
                 )
                 # We need to iterate over segments to trigger the actual transcription
                 text_parts = [segment.text for segment in segments]
@@ -51,7 +51,7 @@ class Transcriber:
                         language=config.LANGUAGE,
                         beam_size=1,
                         vad_filter=False, # Disable VAD as fallback
-                        initial_prompt="以下是简体中文的句子。"
+                        # initial_prompt="以下是简体中文的句子。" # REMOVED
                     )
                     text_parts = [segment.text for segment in segments]
                 else:

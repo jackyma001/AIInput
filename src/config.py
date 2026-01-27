@@ -13,7 +13,7 @@ class Config:
     # Model settings
     MODEL_SIZE= "small"      # tiny, base, small, medium, large
     DEVICE = "cpu"           # cpu or cuda
-    LANGUAGE = "zh"          # Set to Chinese
+    LANGUAGE = None          # None = Auto-detect language
     
     # LLM Settings
     LLM_ENABLED = False
