@@ -35,7 +35,8 @@ class Transcriber:
                     audio_path, 
                     language=config.LANGUAGE,
                     beam_size=1,
-                    vad_filter=False, # Disabled by default for stability
+                    vad_filter=True,  # Enable VAD to filter silence (Speedup!)
+                    vad_parameters=dict(min_silence_duration_ms=500),
                     initial_prompt="以下是简体中文的句子。"
                 )
                 # We need to iterate over segments to trigger the actual transcription
