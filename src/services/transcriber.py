@@ -42,7 +42,9 @@ class Transcriber:
                 # We need to iterate over segments to trigger the actual transcription
                 text_parts = [segment.text for segment in segments]
             except Exception as e:
+                # Log the actual error to debug "onnxruntime" issues
                 if "onnxruntime" in str(e).lower():
+                    logger.error(f"VAD Failure Detailed Error: {e}")
                     logger.warning("onnxruntime not found or failing. Retrying without VAD filter...")
                     segments, info = self.model.transcribe(
                         audio_path, 

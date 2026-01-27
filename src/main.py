@@ -3,6 +3,13 @@ import os
 import traceback
 from datetime import datetime
 
+# CRITICAL: Import onnxruntime BEFORE PyQt5 to prevent DLL conflicts (e.g. vcruntime140.dll)
+# This must happen before any PyQt5 imports
+try:
+    import onnxruntime
+except ImportError:
+    pass
+
 # CRITICAL: Setup global exception handler immediately to catch import errors
 def handle_exception(exc_type, exc_value, exc_traceback):
     if issubclass(exc_type, KeyboardInterrupt):
@@ -34,6 +41,8 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.dirname(current_dir)
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
+
+
 
 # Imports with logging available (handled by excepthook)
 from src.services.hotkey_manager import HotkeyManager
