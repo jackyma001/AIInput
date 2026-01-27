@@ -11,7 +11,10 @@ class Config:
     CHUNK_SIZE = 1024
     
     # Model settings
-    MODEL_SIZE= "small"      # tiny, base, small, medium, large
+    # Model settings
+    # Options: "tiny", "base", "small", "medium", "large-v3"
+    # Distilled (Fast & Accurate): "Systran/faster-distil-whisper-large-v3"
+    MODEL_SIZE = "small"      # Changed to 'base' for speed (was 'small')
     DEVICE = "cpu"           # cpu or cuda
     LANGUAGE = None          # None = Auto-detect language
     
