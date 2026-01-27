@@ -20,6 +20,7 @@ args = [
     '--collect-all=PyQt5',
     '--collect-all=tokenizers',
     '--collect-all=huggingface_hub',
+    '--collect-all=onnxruntime',  # FIX: Ensure VAD works in EXE
     '--hidden-import=PyQt5.QtCore',
     '--hidden-import=PyQt5.QtGui',
     '--hidden-import=PyQt5.QtWidgets',
