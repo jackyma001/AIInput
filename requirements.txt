@@ -6,3 +6,6 @@ onnxruntime
 numpy
 requests
 pywin32
+volcengine
+websocket-client
+python-dotenv

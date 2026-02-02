@@ -1,5 +1,9 @@
 import os
 import sys
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 class Config:
     # Hotkey settings
@@ -10,13 +14,27 @@ class Config:
     CHANNELS = 1
     CHUNK_SIZE = 1024
     
-    # Model settings
-    # Model settings
+    # STT Provider Settings
+    # Options: "whisper", "sensevoice", "volcengine"
+    STT_PROVIDER = "volcengine"
+    
+    # --- Whisper Settings ---
     # Options: "tiny", "base", "small", "medium", "large-v3"
     # Distilled (Fast & Accurate): "Systran/faster-distil-whisper-large-v3"
-    MODEL_SIZE = "small"      # Changed to 'base' for speed (was 'small')
+    MODEL_SIZE = "small"
     DEVICE = "cpu"           # cpu or cuda
     LANGUAGE = None          # None = Auto-detect language
+
+    # --- Volcengine (Doubao) Settings ---
+    # To use this, set STT_PROVIDER = "volcengine"
+    VOLC_APP_ID = os.getenv("VOLC_APP_ID")
+    VOLC_ACCESS_KEY = os.getenv("VOLC_ACCESS_KEY")
+    VOLC_SECRET_KEY = os.getenv("VOLC_SECRET_KEY")
+    # Default cluster for ASR
+    VOLC_CLUSTER = "volc.bigasr.auc" 
+
+    # --- SenseVoice Settings ---
+    # Coming soon in local implementation
     
     # LLM Settings
     LLM_ENABLED = False
@@ -47,6 +65,9 @@ class Config:
     def ensure_dirs():
         if not os.path.exists(Config.TEMP_DIR):
             os.makedirs(Config.TEMP_DIR)
+        models_dir = os.path.join(Config.BASE_DIR, "models")
+        if not os.path.exists(models_dir):
+            os.makedirs(models_dir)
 
 config = Config()
 config.ensure_dirs()
