@@ -27,3 +27,7 @@ models/
 *.swp
 *.swo
 .env
+build
+dist
+
+*.spec

@@ -3,7 +3,12 @@ import sys
 from dotenv import load_dotenv
 
 # Load environment variables
-load_dotenv()
+if getattr(sys, 'frozen', False):
+    # If running as EXE, looks for .env in the internal temp folder
+    base_path = sys._MEIPASS
+    load_dotenv(os.path.join(base_path, '.env'))
+else:
+    load_dotenv()
 
 class Config:
     # Hotkey settings
