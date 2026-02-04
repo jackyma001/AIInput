@@ -9,3 +9,4 @@ pywin32; sys_platform == 'win32'
 volcengine
 websocket-client
 python-dotenv
+pyperclip
