@@ -42,7 +42,7 @@ class HotkeyManager:
             on_release=self._on_release
         )
         self.listener.start()
-        logger.info("Hotkey listener started (Ctrl + Win).")
+        logger.info("Hotkey listener started (Ctrl + Shift).")
 
     def stop_listening(self):
         self.is_listening = False
@@ -54,13 +54,13 @@ class HotkeyManager:
         try:
             if key == keyboard.Key.ctrl_l or key == keyboard.Key.ctrl_r:
                 self.pressed_keys.add('ctrl')
-            elif key == keyboard.Key.cmd or key == keyboard.Key.cmd_r:
-                self.pressed_keys.add('cmd')
+            elif key == keyboard.Key.shift or key == keyboard.Key.shift_r:
+                self.pressed_keys.add('shift')
         except Exception as e:
             logger.error(f"Error in _on_press: {e}")
         
         # Check if hotkey combo is pressed
-        if 'ctrl' in self.pressed_keys and 'cmd' in self.pressed_keys:
+        if 'ctrl' in self.pressed_keys and 'shift' in self.pressed_keys:
             if not self.hotkey_active:
                 self.hotkey_active = True
                 self._start_recording()
@@ -69,14 +69,14 @@ class HotkeyManager:
         try:
             if key == keyboard.Key.ctrl_l or key == keyboard.Key.ctrl_r:
                 self.pressed_keys.discard('ctrl')
-            elif key == keyboard.Key.cmd or key == keyboard.Key.cmd_r:
-                self.pressed_keys.discard('cmd')
+            elif key == keyboard.Key.shift or key == keyboard.Key.shift_r:
+                self.pressed_keys.discard('shift')
         except Exception as e:
             logger.error(f"Error in _on_release: {e}")
         
         # If hotkey was active and now one of the keys is released, stop recording
         if self.hotkey_active:
-            if 'ctrl' not in self.pressed_keys or 'cmd' not in self.pressed_keys:
+            if 'ctrl' not in self.pressed_keys or 'shift' not in self.pressed_keys:
                 self.hotkey_active = False
                 self._stop_recording()
 

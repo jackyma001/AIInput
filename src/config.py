@@ -12,7 +12,7 @@ else:
 
 class Config:
     # Hotkey settings
-    HOTKEY = "<ctrl>+<cmd>"  # Ctrl + Win key
+    HOTKEY = "<ctrl>+<shift>"  # Ctrl + Shift key
     
     # Audio settings
     SAMPLE_RATE = 16000
