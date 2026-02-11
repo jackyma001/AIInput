@@ -20,9 +20,11 @@ class ListeningBar(QWidget):
         self.setWindowFlags(
             Qt.FramelessWindowHint | 
             Qt.WindowStaysOnTopHint | 
-            Qt.Tool
+            Qt.Tool |
+            Qt.WindowDoesNotAcceptFocus
         )
         self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setAttribute(Qt.WA_ShowWithoutActivating)
         self.bar_width = 500
         self.bar_height = 70
         self.resize(self.bar_width, self.bar_height)
@@ -65,8 +67,11 @@ class ListeningBar(QWidget):
 
     def show_bar(self):
         self.audio_levels = [0.05] * self.max_levels
+        # Show window without activating it (keeping focus on the previous app)
         self.show()
-        self.raise_()
+        # On macOS, raise_() might still steal focus, let's be careful
+        if sys.platform != 'darwin':
+            self.raise_()
 
     def hide_bar(self):
         self.hide()
