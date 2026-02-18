@@ -1,4 +1,5 @@
 import time
+import sys
 import pyperclip
 from pynput.keyboard import Controller, Key
 from src.utils.logger import logger
@@ -26,8 +27,9 @@ class TextInjector:
             # 3. Short wait to ensure clipboard update
             time.sleep(0.1) 
             
-            # 4. Simulate Ctrl+V to paste
-            with self.keyboard.pressed(Key.ctrl):
+            # 4. Simulate Paste command (Cmd+V on macOS, Ctrl+V on others)
+            paste_key = Key.cmd if sys.platform == 'darwin' else Key.ctrl
+            with self.keyboard.pressed(paste_key):
                 self.keyboard.press('v')
                 self.keyboard.release('v')
             

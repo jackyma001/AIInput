@@ -6,7 +6,8 @@ from src.services.transcriber import Transcriber
 from src.services.text_injector import TextInjector
 from src.services.llm_refiner import LLMRefiner
 from src.utils.logger import logger
-import winsound
+import sys
+import os
 import traceback
 
 class HotkeyManager:
@@ -85,8 +86,13 @@ class HotkeyManager:
             if not self.recorder.is_recording:
                 logger.debug("Hotkey combo pressed: Starting recording")
                 self.recorder.start_recording()
-                # Play a very short, subtle beep (low frequency, short duration)
-                threading.Thread(target=lambda: winsound.Beep(600, 50), daemon=True).start()
+                # Play a short, subtle notification
+                if sys.platform == 'win32':
+                    import winsound
+                    threading.Thread(target=lambda: winsound.Beep(600, 50), daemon=True).start()
+                elif sys.platform == 'darwin':
+                    # macOS system beep
+                    threading.Thread(target=lambda: os.system('echo -e "\a"'), daemon=True).start()
                 if self.on_recording_start:
                     self.on_recording_start()
         except Exception as e:
